@@ -5,19 +5,22 @@
 #include "./linear/linear.h"
 
 int main(){
-    double data1[][3] = {{1, 0, 1}, {0, 0, 0}, {1, 1, 1}};
-    double data2[][2] = {{3, 20}, {4, 0}, {5, 13}};
-    Matrix inputs = createMatrix(3, 3, data1);
-    Matrix outputs = createMatrix(3, 2, data2);
+    double data1[][2] = {{1, 1}, {0, 0}};
+    double data2[][1] = {{3}, {4}};
+    Matrix inputs = createMatrix(2, 2, data1);
+    Matrix outputs = createMatrix(2, 1, data2);
     
-    int numLayers = 1;
-    int layers[] = {2};
+    int numLayers = 0;
+    int layers[0];
 
     Network n = createNetwork(inputs, outputs, numLayers, layers);
+    printf("Inputs:\n");
+    printMatrix(n->inputs);
+    printf("Weights:\n");
     printMatrix(n->weights[0]);
-    printf("\n");
-    printMatrix(n->weights[1]);
-    
+    printf("New Output:\n");
+    printMatrix(feedforward(n));
+
     // clean up
     freeNetwork(n);
 
