@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <stdbool.h>
 #include "matrix.h"
 
-void addMatrixConst(Matrix m, float num){
+void addMatrixConst(Matrix m, double num){
     for(int i = 0; i < m->height; i++){
         for(int j = 0; j < m->width; j++){
             m->mat[i][j] += num;
@@ -11,7 +12,7 @@ void addMatrixConst(Matrix m, float num){
     }
 }
 
-void subMatrixConst(Matrix m, float num){
+void subMatrixConst(Matrix m, double num){
     for(int i = 0; i < m->height; i++){
         for(int j = 0; j < m->width; j++){
             m->mat[i][j] -= num;
@@ -19,7 +20,7 @@ void subMatrixConst(Matrix m, float num){
     }
 }
 
-void mulMatrixConst(Matrix m, float num){
+void mulMatrixConst(Matrix m, double num){
     for(int i = 0; i < m->height; i++){
         for(int j = 0; j < m->width; j++){
             m->mat[i][j] *= num;
@@ -35,7 +36,7 @@ Matrix mulMatrix(Matrix m1, Matrix m2){
     }
     int height = m1->height;
     int width = m2->width;
-    float data[height][width];
+    double data[height][width];
     for(int i = 0; i < height; i++){
         for(int j = 0; j < width; j++){
             data[i][j] = 0;
@@ -51,9 +52,9 @@ Matrix mulMatrix(Matrix m1, Matrix m2){
 void transpose(Matrix m){
     int heightT = m->width;
     int widthT = m->height;
-    float **data = malloc(sizeof(float**) * heightT);
+    double **data = malloc(sizeof(double**) * heightT);
     for(int i = 0; i < heightT; i++){
-        data[i] = malloc(sizeof(float) * widthT);
+        data[i] = malloc(sizeof(double) * widthT);
     }
     for(int i = 0; i < heightT; i++){
         for(int j = 0; j < widthT; j++){
@@ -73,7 +74,7 @@ Matrix addMatrix(Matrix m1, Matrix m2){
     }
     int height = m1->height;
     int width = m1->width;
-    float data[height][width];
+    double data[height][width];
     for(int i = 0; i < height; i++){
         for(int j = 0; j < width; j++){
             data[i][j] = m1->mat[i][j] + m2->mat[i][j];
@@ -89,7 +90,7 @@ Matrix subMatrix(Matrix m1, Matrix m2){
     }
     int height = m1->height;
     int width = m1->width;
-    float data[height][width];
+    double data[height][width];
     for(int i = 0; i < height; i++){
         for(int j = 0; j < width; j++){
             data[i][j] = m1->mat[i][j] - m2->mat[i][j];
@@ -98,14 +99,14 @@ Matrix subMatrix(Matrix m1, Matrix m2){
     return createMatrix(height, width, data);
 }
 
-Matrix createMatrix(int height, int width, float mat[][width]){
+Matrix createMatrix(int height, int width, double mat[][width]){
     Matrix m = malloc(sizeof(matrix));
     m->height = height;
     m->width = width;
-    m->mat = malloc(sizeof(float**) * height);
+    m->mat = malloc(sizeof(double**) * height);
     
     for(int i = 0; i < height; i++){
-        m->mat[i] = malloc(sizeof(float) * width);
+        m->mat[i] = malloc(sizeof(double) * width);
         for(int j = 0; j < width; j++){
             m->mat[i][j] = mat[i][j];
         }
@@ -115,10 +116,11 @@ Matrix createMatrix(int height, int width, float mat[][width]){
 }
 
 Matrix createRandMatrix(int height, int width){
-    float data[height][width];
+    double data[height][width];
+    srand(time(0));
     for(int i = 0; i < height; i++){
         for(int j = 0; j < width; j++){
-            data[i][j] = rand();
+            data[i][j] = ((double)rand()) / ((double)RAND_MAX);
         }
     }
     return createMatrix(height, width, data);
@@ -148,9 +150,9 @@ void printMatrix(Matrix m){
         printf("[");
         for(int j = 0; j < m->width; j++){
             if(j == (m->width-1)){
-                printf("%.0f", m->mat[i][j]);
+                printf("%.3f", m->mat[i][j]);
             }else{
-                printf("%.0f ", m->mat[i][j]);
+                printf("%.3f ", m->mat[i][j]);
             }
         }
         printf("]\n");

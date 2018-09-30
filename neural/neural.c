@@ -7,7 +7,7 @@ Network createNetwork(Matrix inputs, Matrix outputs, int numLayers, int layers[n
     Network n = malloc(sizeof(network));
     n->inputs = inputs;
     n->outputs = outputs;
-    n->weights = malloc(sizeof(void*) * (numLayers+1));
+    n->weights = malloc(sizeof(Matrix) * (numLayers+1));
     for(int i = 0; i < (numLayers+1); i++){
         if(i == 0){
             n->weights[i] = createRandMatrix(inputs->width, layers[i]);
@@ -17,7 +17,7 @@ Network createNetwork(Matrix inputs, Matrix outputs, int numLayers, int layers[n
             n->weights[i] = createRandMatrix(layers[i-1], layers[i]);
         }
     }
-    n->numLayers = numLayers;
+    n->numLayers = numLayers+1;
     return n;
 }
 
