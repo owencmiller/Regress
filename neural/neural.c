@@ -3,6 +3,7 @@
 #include "neural.h"
 #include "../linear/linear.h"
 
+
 Network createNetwork(Matrix inputs, Matrix outputs, int numLayers, int layers[numLayers]){
     Network n = malloc(sizeof(network));
     n->inputs = inputs;
@@ -28,7 +29,6 @@ void freeNetwork(Network n){
     free(n->weights);
     freeMatrix(n->inputs);
     freeMatrix(n->outputs);
-    free(n->weights);
     free(n);
 }
 
