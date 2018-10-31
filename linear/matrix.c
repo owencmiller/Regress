@@ -99,12 +99,49 @@ Matrix subMatrix(Matrix m1, Matrix m2){
     return createMatrix(height, width, data);
 }
 
+void insertCol(Matrix m, double* data, int size, int colNum){
+
+    int height = m->height;
+    int width = m->width+1;
+
+    if(width < colNum || colNum < 0 || size != height){
+        printf("--Invalid column insertion--\n");
+        return;
+    }
+    double **newdata = malloc(sizeof(double**) * height);
+    for(int i = 0; i < height; i++){
+        newdata[i] = malloc(sizeof(double) * width);
+    }
+
+    // This loop repeats code so 'i' gets checked O(i) rather than O(i*j) times
+    for(int i = 0; i < width; i++){
+        if(i < colNum){
+            for(int j = 0; j < height; j++){
+                newdata[j][i] = m->mat[j][i];
+            }
+        }else if(i == colNum){
+            for(int j = 0; j < height; j++){
+                newdata[j][i] = data[j];
+            }
+        }else if(i > colNum){
+            for(int j = 0; j < height; j++){
+                newdata[j][i] = m->mat[j][i-1];
+            }
+        }
+    }
+
+    free2DArray(m);
+    m->mat = newdata;
+    m->height = height;
+    m->width = width;
+}
+
 Matrix createMatrix(int height, int width, double mat[][width]){
     Matrix m = malloc(sizeof(matrix));
     m->height = height;
     m->width = width;
     m->mat = malloc(sizeof(double**) * height);
-    
+
     for(int i = 0; i < height; i++){
         m->mat[i] = malloc(sizeof(double) * width);
         for(int j = 0; j < width; j++){
@@ -139,7 +176,7 @@ void free2DArray(Matrix m){
     for(int i = 0; i < m->height; i++){
         free(m->mat[i]);
     }
-    free(m->mat); 
+    free(m->mat);
 }
 
 void printMatrix(Matrix m){

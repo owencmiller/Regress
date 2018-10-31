@@ -3,26 +3,18 @@
 #include <stdlib.h>
 #include "./neural/neural.h"
 #include "./linear/linear.h"
+#include "./regression/regress.h"
 
 int main(){
-    double data1[][2] = {{1, 1}, {0, 0}};
-    double data2[][1] = {{3}, {4}};
-    Matrix inputs = createMatrix(2, 2, data1);
-    Matrix outputs = createMatrix(2, 1, data2);
-    
-    int numLayers = 0;
-    int layers[0];
+    double data1[][2] = {{0, 0}, {1, 1}, {2, 2}};
+    Matrix inputs = createMatrix(3, 2, data1);
 
-    Network n = createNetwork(inputs, outputs, numLayers, layers);
-    printf("Inputs:\n");
-    printMatrix(n->inputs);
-    printf("Weights:\n");
-    printMatrix(n->weights[0]);
-    printf("New Output:\n");
-    printMatrix(feedforward(n));
+    double newdata[] = {1,2,3};
+    printMatrix(inputs);
+    printf("-------------\n");
+    insertCol(inputs, newdata, 3, 0);
+    printMatrix(inputs);
 
-    // clean up
-    freeNetwork(n);
 
     return 0;
 }

@@ -3,6 +3,10 @@
 #include "neural.h"
 #include "../linear/linear.h"
 
+Matrix computeCost(Network n, Matrix guessz){
+    
+}
+
 Matrix feedforward(Network net){
     Matrix m = mulMatrix(net->inputs, net->weights[0]);
     for(int i = 1; i < net->numLayers+1; i++){

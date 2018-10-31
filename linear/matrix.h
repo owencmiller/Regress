@@ -15,6 +15,8 @@ void mulMatrixConst(Matrix m, double num);
 Matrix addMatrix(Matrix m1, Matrix m2);
 Matrix subMatrix(Matrix m1, Matrix m2);
 Matrix mulMatrix(Matrix m1, Matrix m2);
+
+void insertCol(Matrix m, double data[], int size, int colNum);
 void transpose(Matrix m);
 
 Matrix createMatrix(int height, int width, double mat[][width]);
