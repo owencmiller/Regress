@@ -1,38 +1,56 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <time.h>
 #include <stdbool.h>
 #include "matrix.h"
 
-void addMatrixConst(Matrix m, double num){
-    for(int i = 0; i < m->height; i++){
-        for(int j = 0; j < m->width; j++){
-            m->mat[i][j] += num;
+Matrix addMatrixConst(Matrix m, double num){
+    int height = m->height;
+    int width = m->width;
+    double data[height][width];
+    for(int i = 0; i < height; i++){
+        for(int j = 0; j < width; j++){
+            data[i][j] = m->mat[i][j] + num;
         }
     }
+    return createMatrix(height, width, data);
 }
 
-void subMatrixConst(Matrix m, double num){
-    for(int i = 0; i < m->height; i++){
-        for(int j = 0; j < m->width; j++){
-            m->mat[i][j] -= num;
+Matrix subMatrixConst(Matrix m, double num){
+    int height = m->height;
+    int width = m->width;
+    double data[height][width];
+    for(int i = 0; i < height; i++){
+        for(int j = 0; j < width; j++){
+            data[i][j] = m->mat[i][j] - num;
         }
     }
+    return createMatrix(height, width, data);
 }
 
-void mulMatrixConst(Matrix m, double num){
-    for(int i = 0; i < m->height; i++){
-        for(int j = 0; j < m->width; j++){
-            m->mat[i][j] *= num;
+Matrix mulMatrixConst(Matrix m, double num){
+    int height = m->height;
+    int width = m->width;
+    double data[height][width];
+    for(int i = 0; i < height; i++){
+        for(int j = 0; j < width; j++){
+            data[i][j] = m->mat[i][j] * num;
         }
     }
+    return createMatrix(height, width, data);
 }
-void divMatrixConst(Matrix m, double num){
-    for(int i = 0; i < m->height; i++){
-        for(int j = 0; j < m->width; j++){
-            m->mat[i][j] /= num;
+
+Matrix divMatrixConst(Matrix m, double num){
+    int height = m->height;
+    int width = m->width;
+    double data[height][width];
+    for(int i = 0; i < height; i++){
+        for(int j = 0; j < width; j++){
+            data[i][j] = m->mat[i][j] / num;
         }
     }
+    return createMatrix(height, width, data);
 }
 
 
@@ -92,7 +110,7 @@ Matrix addMatrix(Matrix m1, Matrix m2){
 
 Matrix subMatrix(Matrix m1, Matrix m2){
     if((m1->height != m2->height) && (m1->width != m2->width)){
-        printf("Unable to add matricies of different dimensions: %dx%d and %dx%d\n", m1->height, m1->width, m2->height, m2->width);
+        printf("Unable to subtract matricies of different dimensions: %dx%d and %dx%d\n", m1->height, m1->width, m2->height, m2->width);
         return 0;
     }
     int height = m1->height;
@@ -104,6 +122,42 @@ Matrix subMatrix(Matrix m1, Matrix m2){
         }
     }
     return createMatrix(height, width, data);
+}
+
+Matrix expMatrix(Matrix m){
+  int height = m->height;
+  int width = m->width;
+  double data[height][width];
+  for(int i = 0; i < height; i++){
+      for(int j = 0; j < width; j++){
+          data[i][j] = exp(m->mat[i][j]);
+      }
+  }
+  return createMatrix(height, width, data);
+}
+
+Matrix logMatrix(Matrix m){
+  int height = m->height;
+  int width = m->width;
+  double data[height][width];
+  for(int i = 0; i < height; i++){
+      for(int j = 0; j < width; j++){
+          data[i][j] = log(m->mat[i][j]);
+      }
+  }
+  return createMatrix(height, width, data);
+}
+
+Matrix recipMatrix(Matrix m){
+  int height = m->height;
+  int width = m->width;
+  double data[height][width];
+  for(int i = 0; i < height; i++){
+      for(int j = 0; j < width; j++){
+          data[i][j] = (1 / m->mat[i][j]);
+      }
+  }
+  return createMatrix(height, width, data);
 }
 
 void insertCol(Matrix m, double* data, int size, int colNum){
