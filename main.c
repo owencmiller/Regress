@@ -6,15 +6,23 @@
 #include "./regression/regress.h"
 
 int main(){
-    double data1[][2] = {{0, 0}, {1, 1}, {2, 2}};
-    Matrix inputs = createMatrix(3, 2, data1);
+    double data1[][1] = {{0}, {1}, {2}};
+    Matrix inputs = createMatrix(3, 1, data1);
+    double data2[][1] = {{0}, {1}, {2}};
+    Matrix expected = createMatrix(3, 1, data2);
 
-    double newdata[] = {1,2,3};
-    printMatrix(inputs);
-    printf("-------------\n");
-    insertCol(inputs, newdata, 3, 0);
-    printMatrix(inputs);
-
-
+    Matrix hypo = linearRegression(inputs, expected);
+    // printMatrix(inputs);
+    // printf("--------\n");
+    // printMatrix(expected);
+    // printf("--------\n");
+    // Matrix dup = duplicateMatrix(inputs);
+    // printMatrix(dup);
+    // printf("--------\n");
+    // transpose(dup);
+    // printMatrix(dup);
+    // printf("--------\n");
+    // printMatrix(inputs);
+    // printf("--------\n");
     return 0;
 }

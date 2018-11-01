@@ -3,6 +3,7 @@
 
 #include "../linear/linear.h"
 
+void insertOnes(Matrix inputs);
 Matrix linearRegression(Matrix inputs, Matrix expected);
 
 #endif

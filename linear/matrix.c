@@ -27,11 +27,18 @@ void mulMatrixConst(Matrix m, double num){
         }
     }
 }
+void divMatrixConst(Matrix m, double num){
+    for(int i = 0; i < m->height; i++){
+        for(int j = 0; j < m->width; j++){
+            m->mat[i][j] /= num;
+        }
+    }
+}
 
 
 Matrix mulMatrix(Matrix m1, Matrix m2){
     if(m1->width != m2->height){
-        printf("Unable to print matricies of dimension: %dx%d and %dx%d\n", m1->height, m1->width, m2->height, m2->width);
+        printf("Unable to multiply matricies of dimension: %dx%d and %dx%d\n", m1->height, m1->width, m2->height, m2->width);
         return 0;
     }
     int height = m1->height;
@@ -136,6 +143,16 @@ void insertCol(Matrix m, double* data, int size, int colNum){
     m->width = width;
 }
 
+Matrix duplicateMatrix(Matrix m){
+    double mat[m->height][m->width];
+    for(int i = 0; i < m->height; i++){
+        for(int j = 0; j < m->width; j++){
+            mat[i][j] = m->mat[i][j];
+        }
+    }
+    return createMatrix(m->height, m->width, mat);
+}
+
 Matrix createMatrix(int height, int width, double mat[][width]){
     Matrix m = malloc(sizeof(matrix));
     m->height = height;
@@ -167,7 +184,7 @@ void freeMatrix(Matrix m){
     if(!m){
         return;
     }
-    printf("Freeing matrix of size: %dx%d\n", m->height, m->width);
+    //printf("Freeing matrix of size: %dx%d\n", m->height, m->width);
     free2DArray(m);
     free(m);
 }
