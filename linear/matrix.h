@@ -12,6 +12,7 @@ Matrix addMatrixConst(Matrix m, double num);
 Matrix subMatrixConst(Matrix m, double num);
 Matrix mulMatrixConst(Matrix m, double num);
 Matrix divMatrixConst(Matrix m, double num);
+Matrix subConstMatrix(double num, Matrix m);
 
 Matrix addMatrix(Matrix m1, Matrix m2);
 Matrix subMatrix(Matrix m1, Matrix m2);
@@ -21,7 +22,7 @@ Matrix logMatrix(Matrix m);
 Matrix recipMatrix(Matrix m);
 
 void insertCol(Matrix m, double data[], int size, int colNum);
-void transpose(Matrix m);
+Matrix transpose(Matrix m);
 
 Matrix createMatrix(int height, int width, double mat[][width]);
 Matrix createRandMatrix(int height, int width);

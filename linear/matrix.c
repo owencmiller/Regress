@@ -53,6 +53,17 @@ Matrix divMatrixConst(Matrix m, double num){
     return createMatrix(height, width, data);
 }
 
+Matrix subConstMatrix(double num, Matrix m){
+    int height = m->height;
+    int width = m->width;
+    double data[height][width];
+    for(int i = 0; i < height; i++){
+        for(int j = 0; j < width; j++){
+            data[i][j] = num - m->mat[i][j];
+        }
+    }
+    return createMatrix(height, width, data);
+}
 
 Matrix mulMatrix(Matrix m1, Matrix m2){
     if(m1->width != m2->height){
@@ -74,22 +85,16 @@ Matrix mulMatrix(Matrix m1, Matrix m2){
     return createMatrix(height, width, data);
 }
 
-void transpose(Matrix m){
+Matrix transpose(Matrix m){
     int heightT = m->width;
     int widthT = m->height;
-    double **data = malloc(sizeof(double**) * heightT);
-    for(int i = 0; i < heightT; i++){
-        data[i] = malloc(sizeof(double) * widthT);
-    }
+    double data[heightT][widthT];
     for(int i = 0; i < heightT; i++){
         for(int j = 0; j < widthT; j++){
             data[i][j] = m->mat[j][i];
         }
     }
-    free2DArray(m);
-    m->mat = data;
-    m->height = heightT;
-    m->width = widthT;
+    return createMatrix(heightT, widthT, data);
 }
 
 Matrix addMatrix(Matrix m1, Matrix m2){
@@ -154,7 +159,7 @@ Matrix recipMatrix(Matrix m){
   double data[height][width];
   for(int i = 0; i < height; i++){
       for(int j = 0; j < width; j++){
-          data[i][j] = (1 / m->mat[i][j]);
+          data[i][j] = (1.0 / m->mat[i][j]);
       }
   }
   return createMatrix(height, width, data);
