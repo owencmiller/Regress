@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <time.h>
+#include <stdbool.h>
 #include "regress.h"
 #include "../linear/linear.h"
 
@@ -36,7 +37,6 @@ Matrix linearCostFunction(Matrix inputs, Matrix coefficients, Matrix expected){
     Matrix hypo = linearHypothesis(inputs, coefficients);
     Matrix diff = subMatrix(hypo, expected);
     Matrix diffTrans = transpose(diff);
-    //Matrix cost = mulMatrix(diffTrans, diff);
     Matrix div = divMatrixConst(mulMatrix(diffTrans, diff), 2*inputs->height);
     return div;
 }
@@ -60,8 +60,6 @@ Matrix logisticGradientDescent(Matrix inputs, Matrix coefficients, Matrix expect
     Matrix diff = subMatrix(hypo, expected);
     Matrix inputTrans = transpose(inputs);
     Matrix change = mulMatrix(inputTrans, diff);
-    // printMatrix(change);
-    // printf("---------\n");
     Matrix mul = mulMatrixConst(change, alpha);
     Matrix div = divMatrixConst(mul, inputs->height);
     Matrix sub = subMatrix(coefficients, div);
@@ -70,7 +68,7 @@ Matrix logisticGradientDescent(Matrix inputs, Matrix coefficients, Matrix expect
 }
 
 // Perform linear regression
-Matrix linearRegression(Matrix inputs, Matrix expected){
+Matrix linearRegression(Matrix inputs, Matrix expected, bool print){
 
     double alpha = .01;
     double cost = 0;
@@ -83,7 +81,9 @@ Matrix linearRegression(Matrix inputs, Matrix expected){
     do{
         Matrix costMat = linearCostFunction(inputs, coefficients, expected);
         cost = costMat->mat[0][0];
-        printf("%0.11f\n", cost);
+        if(print){
+            printf("%0.11f\n", cost);
+        }
         coefficients = linearGradientDescent(inputs, coefficients, expected, alpha);
         counter++;
     }while(cost > .00000001);
@@ -96,7 +96,7 @@ Matrix linearRegression(Matrix inputs, Matrix expected){
 }
 
 // Perform linear regression
-Matrix logisticRegression(Matrix inputs, Matrix expected){
+Matrix logisticRegression(Matrix inputs, Matrix expected, bool print){
 
     double alpha = .01;
     double cost = 0;
@@ -109,10 +109,12 @@ Matrix logisticRegression(Matrix inputs, Matrix expected){
     do{
         Matrix costMat = logisticCostFunction(inputs, coefficients, expected);
         cost = costMat->mat[0][0];
-        printf("%0.11f\n", cost);
+        if(print){
+            printf("%0.11f\n", cost);
+        }
         coefficients = logisticGradientDescent(inputs, coefficients, expected, alpha);
         counter++;
-    }while(cost > .0000001 && counter > 0);
+    }while(cost > .0000001);
 
     t = clock() - t;
     double time_taken = ((double)t)/CLOCKS_PER_SEC;

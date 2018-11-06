@@ -11,18 +11,7 @@ int main(){
     double data2[][1] = {{1}, {0}};
     Matrix expected = createMatrix(2, 1, data2);
 
-    Matrix hypo = linearRegression(inputs, expected);
-    // printMatrix(inputs);
-    // printf("--------\n");
-    // printMatrix(expected);
-    // printf("--------\n");
-    // Matrix dup = duplicateMatrix(inputs);
-    // printMatrix(dup);
-    // printf("--------\n");
-    // transpose(dup);
-    // printMatrix(dup);
-    // printf("--------\n");
-    // printMatrix(inputs);
-    // printf("--------\n");
+    linearRegression(inputs, expected, false);
+
     return 0;
 }
