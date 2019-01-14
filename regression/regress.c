@@ -95,7 +95,7 @@ Matrix linearRegression(Matrix inputs, Matrix expected, bool print){
     return coefficients;
 }
 
-// Perform linear regression
+// Perform logistic regression
 Matrix logisticRegression(Matrix inputs, Matrix expected, bool print){
 
     double alpha = .01;
